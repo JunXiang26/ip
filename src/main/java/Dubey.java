@@ -181,6 +181,18 @@ public class Dubey {
                     );
                     break;
 
+                case "delete":
+                    int deleteIndex = Integer.parseInt(command[1]) - 1;
+                    System.out.println("     ____________________________________________________________\n" +
+                            "      Noted. I've removed this task:\n" +
+                            "        " + taskList.get(deleteIndex).toString()
+                    );
+                    taskList.remove(deleteIndex);
+                    System.out.println("      Now you have " + taskList.size() + " tasks in the list.\n" +
+                            "     ____________________________________________________________\n"
+                    );
+                    break;
+
                 default:
                     try {
                         handleCommand(input);
