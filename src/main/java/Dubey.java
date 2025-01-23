@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -27,6 +28,7 @@ class Todo extends Task {
 
     public Todo(String description) {
         super(description);
+
     }
 
     @Override
@@ -67,7 +69,31 @@ class Event extends Task {
     }
 }
 
+class DubeyException extends Exception {
+    // Constructor with a custom message
+    public DubeyException(String message) {
+        super("     ____________________________________________________________\n"
+              + "       Error!! " + message + "\n"
+              + "     ____________________________________________________________\n");
+    }
+}
+
 public class Dubey {
+    public static void handleCommand(String input) throws DubeyException {
+        String[] parts = input.split(" ", 2);
+        String command = parts[0];
+
+        switch (command) {
+            case "todo":
+                if (parts.length < 2 || parts[1].trim().isEmpty()) {
+                    throw new DubeyException("Description todo is empty.");
+                }
+                break;
+
+            default:
+                throw new DubeyException("Unknown command: " + command);
+        }
+    }
 
     public static void main(String[] args) {
         ArrayList<Task> taskList = new ArrayList<>(100);
@@ -83,10 +109,11 @@ public class Dubey {
 
         while (!input.equals("bye")) {
             String command[] = input.split(" ");
+
             switch (command[0]) {
                 case "list":
                     System.out.println("     ____________________________________________________________\n"
-                                     + "      Here are the tasks in your list:\n");
+                            + "      Here are the tasks in your list:\n");
                     for (Task task : taskList) {
                         int i = taskList.indexOf(task) + 1;
                         System.out.println("      " + i + "." + task.toString());
@@ -114,19 +141,25 @@ public class Dubey {
                     System.out.println(unmarked);
                     break;
                 case "todo":
-                    String descriptionTodo = input.substring(4);
-                    taskList.add(new Todo(descriptionTodo));
-                    System.out.println("     ____________________________________________________________\n" +
-                            "      Got it. I've added this task:\n" +
-                            "        " + taskList.getLast().toString() + "\n" +
-                            "      Now you have " + taskList.size() + " tasks in the list.\n" +
-                            "     ____________________________________________________________\n"
-                    );
+                    try {
+                        handleCommand(input);
+                        String descriptionTodo = input.substring(4);
+                        taskList.add(new Todo(descriptionTodo));
+                        System.out.println("     ____________________________________________________________\n" +
+                                "      Got it. I've added this task:\n" +
+                                "        " + taskList.getLast().toString() + "\n" +
+                                "      Now you have " + taskList.size() + " tasks in the list.\n" +
+                                "     ____________________________________________________________\n"
+                        );
+                    } catch (DubeyException e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
+
                 case "deadline":
                     String descriptionDeadline = input.substring(8, input.indexOf("/"));
                     String deadline = input.substring(input.indexOf("/") + 4);
-                    taskList.add(new Deadline(descriptionDeadline,  deadline));
+                    taskList.add(new Deadline(descriptionDeadline, deadline));
                     System.out.println("     ____________________________________________________________\n" +
                             "      Got it. I've added this task:\n" +
                             "        " + taskList.getLast().toString() + "\n" +
@@ -134,11 +167,12 @@ public class Dubey {
                             "     ____________________________________________________________\n"
                     );
                     break;
+
                 case "event":
                     String descriptionEvent = input.substring(5, input.indexOf("/"));
                     String eventFrom = input.substring(input.indexOf("/from") + 6, input.indexOf("/to"));
                     String eventTo = input.substring(input.indexOf("/to") + 4);
-                    taskList.add(new Event(descriptionEvent,  eventFrom, eventTo));
+                    taskList.add(new Event(descriptionEvent, eventFrom, eventTo));
                     System.out.println("     ____________________________________________________________\n" +
                             "      Got it. I've added this task:\n" +
                             "        " + taskList.getLast().toString() + "\n" +
@@ -146,12 +180,13 @@ public class Dubey {
                             "     ____________________________________________________________\n"
                     );
                     break;
+
                 default:
-                    taskList.add(new Task(input));
-                    System.out.println("     ____________________________________________________________\n" +
-                            "      added: " + input + "\n" +
-                            "     ____________________________________________________________\n"
-                    );
+                    try {
+                        handleCommand(input);
+                    } catch (DubeyException e) {
+                        System.out.println(e.getMessage());
+                    }
             }
             input = scanner.nextLine();
         }
