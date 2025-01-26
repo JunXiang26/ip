@@ -1,4 +1,7 @@
-import java.util.Arrays;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -95,8 +98,98 @@ public class Dubey {
         }
     }
 
+    public static void writeTasksToFile(ArrayList<Task> taskList, String filePath) {
+        try (FileWriter writer = new FileWriter(filePath)) {
+            for (Task task : taskList) {
+                if (task instanceof Todo) {
+                    writer.write(String.format("[T|%d|%s]%n", task.isDone ? 1 : 0, task.description));
+                } else if (task instanceof Deadline) {
+                    Deadline deadline = (Deadline) task;
+                    writer.write(String.format("[D|%d|%s|by:%s]%n", task.isDone ? 1 : 0, task.description, deadline.by));
+                } else if (task instanceof Event) {
+                    Event event = (Event) task;
+                    writer.write(String.format("[E|%d|%s|from:%s|to:%s]%n", task.isDone ? 1 : 0, task.description, event.from, event.to));
+                }
+            }
+
+        } catch (IOException e) {
+            System.out.println("An error occurred while writing to file: " + e.getMessage());
+        }
+    }
+
+    public static ArrayList<Task> readTasksFromFile(String filePath) {
+        ArrayList<Task> taskList = new ArrayList<>();
+        try (Scanner scanner = new Scanner(new File(filePath))) {
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                String[] parts = line.substring(1, line.length() - 1).split("\\|");
+                String type = parts[0];
+                boolean isDone = parts[1].equals("1");
+                String description = parts[2];
+
+                switch (type) {
+                    case "T":
+                        Todo todo = new Todo(description);
+                        todo.setStatus(isDone);
+                        taskList.add(todo);
+                        break;
+                    case "D":
+                        String by = parts[3].substring(3); // Remove "by:"
+                        Deadline deadline = new Deadline(description, by);
+                        deadline.setStatus(isDone);
+                        taskList.add(deadline);
+                        break;
+                    case "E":
+                        String from = parts[3].substring(5); // Remove "from:"
+                        String to = parts[4].substring(3); // Remove "to:"
+                        Event event = new Event(description, from, to);
+                        event.setStatus(isDone);
+                        taskList.add(event);
+                        break;
+                }
+            }
+            System.out.println("Tasks successfully loaded from file.");
+        } catch (IOException e) {
+            System.out.println("An error occurred while reading from file: " + e.getMessage());
+        }
+        return taskList;
+    }
+
+
     public static void main(String[] args) {
-        ArrayList<Task> taskList = new ArrayList<>(100);
+        // Define the folder and file paths
+        String folderName = "data";
+        String fileName = "dubey.txt";
+
+        // Create the folder
+        File folder = new File(folderName);
+        if (!folder.exists()) {
+            boolean folderCreated = folder.mkdir();
+            if (folderCreated) {
+                System.out.println("Folder created: " + folderName);
+            } else {
+                System.out.println("Failed to create folder: " + folderName);
+                return;
+            }
+        } else {
+            System.out.println("Folder already exists: " + folderName);
+
+        }
+
+        // Create the text file inside the folder
+        File file = new File(folder, fileName);
+
+        try {
+            if (file.createNewFile()) {
+                System.out.println("File created: " + file.getPath());
+            } else {
+                System.out.println("File already exists: " + file.getPath());
+            }
+        } catch (IOException e) {
+            System.out.println("An error occurred: " + e.getMessage());
+        }
+
+        ArrayList<Task> taskList = readTasksFromFile("data/dubey.txt");
 
         String intro = "     ____________________________________________________________\n"
                     + "     Hello! I'm Dubey!      \n"
@@ -200,6 +293,7 @@ public class Dubey {
                         System.out.println(e.getMessage());
                     }
             }
+            writeTasksToFile(taskList, "data/dubey.txt");
             input = scanner.nextLine();
         }
 
