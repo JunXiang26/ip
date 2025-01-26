@@ -1,3 +1,5 @@
+package dubey;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -76,11 +78,11 @@ class Event extends Task {
     }
 }
 
-// Ui class
+// dubey.Ui class
 class Ui {
     public void showWelcomeMessage() {
         System.out.println("     ____________________________________________________________\n" +
-                "     Hello! I'm Dubey!\n" +
+                "     Hello! I'm dubey.Dubey!\n" +
                 "     What can I do for you?\n" +
                 "     ____________________________________________________________\n");
     }
@@ -138,7 +140,7 @@ class Ui {
 
 }
 
-// Storage class
+// dubey.Storage class
 class Storage {
     private final String filePath;
 
@@ -200,14 +202,14 @@ class Storage {
     }
 }
 
-// Parser class
+// dubey.Parser class
 class Parser {
     public String[] parse(String input) {
         return input.split(" ", 2);
     }
 }
 
-// TaskList class
+// dubey.TaskList class
 class TaskList {
     private final ArrayList<Task> tasks;
 
@@ -236,7 +238,7 @@ class TaskList {
     }
 }
 
-// Main Dubey class
+// Main dubey.Dubey class
 public class Dubey {
     private final Storage storage;
     private final TaskList taskList;
