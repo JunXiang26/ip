@@ -1,7 +1,5 @@
-todo read book
-deadline return book /by June 6th
+todo something
+deadline return book /by 2012-07-29
 event project meeting /from Aug 6th 2pm /to 4pm
-todo join sports club
-todo borrow book
-deadline return book /by Sunday
+deadline return book /by 2025-05-18
 event project meeting /from Mon 2pm /to 4pm

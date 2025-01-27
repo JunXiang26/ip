@@ -1,46 +1,34 @@
      ____________________________________________________________
-     Hello! I'm Dubey!
+     Hello! I'm dubey.Dubey!
      What can I do for you?
      ____________________________________________________________
 
      ____________________________________________________________
       Got it. I've added this task:
-        [T][ ]  read book
+        [T][ ] something
       Now you have 1 tasks in the list.
      ____________________________________________________________
 
      ____________________________________________________________
       Got it. I've added this task:
-        [D][ ]  return book  (by: June 6th)
+        [D][ ] return book (by: Jul 29 2012)
       Now you have 2 tasks in the list.
      ____________________________________________________________
 
      ____________________________________________________________
       Got it. I've added this task:
-        [E][ ]  project meeting (from: Aug 6th 2pm  to: 4pm)
+        [E][ ]  project meeting(from: Aug 6th 2pm to: 4pm)
       Now you have 3 tasks in the list.
      ____________________________________________________________
 
      ____________________________________________________________
       Got it. I've added this task:
-        [T][ ]  join sports club
+        [D][ ] return book (by: May 18 2025)
       Now you have 4 tasks in the list.
      ____________________________________________________________
 
      ____________________________________________________________
       Got it. I've added this task:
-        [T][ ]  borrow book
+        [E][ ] project meeting(from: Mon 2pm to: 4pm)
       Now you have 5 tasks in the list.
-     ____________________________________________________________
-
-     ____________________________________________________________
-      Got it. I've added this task:
-        [D][ ]  return book  (by: Sunday)
-      Now you have 6 tasks in the list.
-     ____________________________________________________________
-
-     ____________________________________________________________
-      Got it. I've added this task:
-        [E][ ]  project meeting (from: Mon 2pm  to: 4pm)
-      Now you have 7 tasks in the list.
      ____________________________________________________________
