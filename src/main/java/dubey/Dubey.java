@@ -138,6 +138,15 @@ class Ui {
                 "     ____________________________________________________________\n");
     }
 
+    public void showTaskFind(ArrayList<Task> taskList) {
+        System.out.println("     ____________________________________________________________\n" +
+                "      Here are the matching tasks in your list:");
+        for (int i = 0; i < taskList.size(); i++) {
+            System.out.println("      " + (i + 1) + ". " + taskList.get(i));
+        }
+        System.out.println("     ____________________________________________________________\n");
+    }
+
 }
 
 // dubey.Storage class
@@ -233,6 +242,17 @@ class TaskList {
         tasks.remove(index);
     }
 
+    public ArrayList<Task> findAll(String keyword) {
+        ArrayList<Task> taskList = new ArrayList<>();
+        for (Task task : tasks) {
+            if (task.description.contains(keyword)) {
+                taskList.add(task);
+            }
+        }
+
+        return taskList;
+    }
+
     public ArrayList<Task> getTasks() {
         return tasks;
     }
@@ -311,6 +331,10 @@ public class Dubey {
                 Task unmarkedTask = taskList.get(unmarkIndex);
                 unmarkedTask.setStatus(false);
                 ui.showTaskUnmarked(unmarkedTask);
+                break;
+            case "find":
+                String keyword = parts[1];
+                ui.showTaskFind(taskList.findAll(keyword));
                 break;
             default:
                 throw new IllegalArgumentException("Unknown command: " + command);
