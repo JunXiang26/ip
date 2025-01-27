@@ -10,15 +10,17 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-
+/**
+ * Represents a task with a description and a completion status.
+ */
 class Task {
     protected String description;
     protected boolean isDone;
 
     /**
-     * Constructor for Task Class
+     * Constructor for Task Class.
      *
-     * @param description description of task
+     * @param description Description of the task.
      */
     public Task(String description) {
         this.description = description;
@@ -31,34 +33,40 @@ class Task {
      * @return "X" if true, " " if false
      */
     public String getStatusIcon() {
-        return (isDone ? "X" : " "); // mark done task with X
+        return (isDone ? "X" : " ");
     }
 
     /**
-     * gets status of Task dependent on if its marked
+     * Sets the completion status of the task.
      *
-     * @param status true or false dependent on if task is done
-     * @return "X" if true, " " if false
+     * @param status True if the task is done, false otherwise.
      */
     public void setStatus(boolean status) {
         isDone = status;
     }
 
     /**
-     * formats Task with string "[X] task description"
+     * Formats the task as a string.
      *
-     * @return "[ ] task description"
+     * @return A string representing the task.
      */
     public String toString() {
         return "[" + this.getStatusIcon() + "] " + description;
     }
 }
 
+/**
+ * Represents a To-Do task.
+ */
 class Todo extends Task {
 
+    /**
+     * Constructor for Todo Class.
+     *
+     * @param description Description of the to-do task.
+     */
     public Todo(String description) {
         super(description);
-
     }
 
     @Override
@@ -67,11 +75,20 @@ class Todo extends Task {
     }
 }
 
+/**
+ * Represents a task with a deadline.
+ */
 class Deadline extends Task {
     protected LocalDate by;
     private static final DateTimeFormatter INPUT_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private static final DateTimeFormatter OUTPUT_FORMAT = DateTimeFormatter.ofPattern("MMM dd yyyy");
 
+    /**
+     * Constructor for Deadline Class.
+     *
+     * @param description Description of the task.
+     * @param by          Deadline for the task in yyyy-MM-dd format.
+     */
     public Deadline(String description, String by) {
         super(description);
         this.by = LocalDate.parse(by, INPUT_FORMAT);
@@ -83,11 +100,21 @@ class Deadline extends Task {
     }
 }
 
+/**
+ * Represents an event task with a start and end time.
+ */
 class Event extends Task {
 
     protected String from;
     protected String to;
 
+    /**
+     * Constructor for Event Class.
+     *
+     * @param description Description of the event.
+     * @param from        Start time of the event.
+     * @param to          End time of the event.
+     */
     public Event(String description, String from, String to) {
         super(description);
         this.from = from;
@@ -100,8 +127,14 @@ class Event extends Task {
     }
 }
 
-// dubey.Ui class
+/**
+ * Handles interactions with the user.
+ */
 class Ui {
+
+    /**
+     * Displays a welcome message.
+     */
     public void showWelcomeMessage() {
         System.out.println("     ____________________________________________________________\n" +
                 "     Hello! I'm dubey.Dubey!\n" +
@@ -109,18 +142,31 @@ class Ui {
                 "     ____________________________________________________________\n");
     }
 
+    /**
+     * Displays a goodbye message.
+     */
     public void showGoodbyeMessage() {
         System.out.println("     ____________________________________________________________\n" +
                 "      Bye. Hope to see you again soon!\n" +
                 "     ____________________________________________________________\n");
     }
 
+    /**
+     * Displays an error message.
+     *
+     * @param message The error message to display.
+     */
     public void showError(String message) {
         System.out.println("     ____________________________________________________________\n" +
                 "      Error: " + message + "\n" +
                 "     ____________________________________________________________\n");
     }
 
+    /**
+     * Displays the list of tasks.
+     *
+     * @param taskList List of tasks to display.
+     */
     public void showTaskList(ArrayList<Task> taskList) {
         System.out.println("     ____________________________________________________________\n" +
                 "      Here are the tasks in your list:");
@@ -130,6 +176,12 @@ class Ui {
         System.out.println("     ____________________________________________________________\n");
     }
 
+    /**
+     * Displays a message when a task is added.
+     *
+     * @param task The task that was added.
+     * @param size The total number of tasks in the list.
+     */
     public void showTaskAdded(Task task, int size) {
         System.out.println("     ____________________________________________________________\n" +
                 "      Got it. I've added this task:\n" +
@@ -138,6 +190,12 @@ class Ui {
                 "     ____________________________________________________________\n");
     }
 
+    /**
+     * Displays a message when a task is deleted.
+     *
+     * @param task The task that was deleted.
+     * @param size The total number of tasks remaining in the list.
+     */
     public void showTaskDeleted(Task task, int size) {
         System.out.println("     ____________________________________________________________\n" +
                 "      Noted. I've removed this task:\n" +
@@ -146,6 +204,11 @@ class Ui {
                 "     ____________________________________________________________\n");
     }
 
+    /**
+     * Displays a message when a task is marked as done.
+     *
+     * @param task The task that was marked as done.
+     */
     public void showTaskMarked(Task task) {
         System.out.println("     ____________________________________________________________\n" +
                 "      Nice! I've marked this task as done:\n" +
@@ -153,6 +216,11 @@ class Ui {
                 "     ____________________________________________________________\n");
     }
 
+    /**
+     * Displays a message when a task is marked as not done.
+     *
+     * @param task The task that was marked as not done.
+     */
     public void showTaskUnmarked(Task task) {
         System.out.println("     ____________________________________________________________\n" +
                 "      OK, I've marked this task as not done yet:\n" +
@@ -162,14 +230,26 @@ class Ui {
 
 }
 
-// dubey.Storage class
+/**
+ * Manages file storage for tasks.
+ */
 class Storage {
     private final String filePath;
 
+    /**
+     * Constructor for Storage Class.
+     *
+     * @param filePath Path to the file where tasks are stored.
+     */
     public Storage(String filePath) {
         this.filePath = filePath;
     }
 
+    /**
+     * Loads tasks from the file.
+     *
+     * @return A list of tasks loaded from the file.
+     */
     public ArrayList<Task> load() {
         ArrayList<Task> taskList = new ArrayList<>();
         File file = new File(filePath);
@@ -221,6 +301,11 @@ class Storage {
         return taskList;
     }
 
+    /**
+     * Saves tasks to the file.
+     *
+     * @param taskList List of tasks to save.
+     */
     public void save(ArrayList<Task> taskList) {
         try (FileWriter writer = new FileWriter(filePath)) {
             for (Task task : taskList) {
@@ -238,54 +323,105 @@ class Storage {
     }
 }
 
-// dubey.Parser class
+
+/**
+ * Parses user input into commands and arguments.
+ */
 class Parser {
+
+    /**
+     * Splits the user input into command and arguments.
+     *
+     * @param input The user input.
+     * @return An array containing the command and arguments.
+     */
     public String[] parse(String input) {
         return input.split(" ", 2);
     }
 }
 
-// dubey.TaskList class
+/**
+ * Manages the list of tasks.
+ */
 class TaskList {
     private final ArrayList<Task> tasks;
 
+    /**
+     * Constructor for TaskList Class.
+     *
+     * @param tasks A list of tasks to initialize with.
+     */
     public TaskList(ArrayList<Task> tasks) {
         this.tasks = tasks;
     }
 
+    /**
+     * Constructor for TaskList Class with no initial tasks.
+     */
     public TaskList() {
         this.tasks = new ArrayList<>();
     }
 
+    /**
+     * Adds a task to the list.
+     *
+     * @param task The task to add.
+     */
     public void add(Task task) {
         tasks.add(task);
     }
 
+    /**
+     * Gets a task from the list by index.
+     *
+     * @param index Index of the task to get.
+     * @return The task at the specified index.
+     */
     public Task get(int index) {
         return tasks.get(index);
     }
 
+    /**
+     * Deletes a task from the list by index.
+     *
+     * @param index Index of the task to delete.
+     */
     public void delete(int index) {
         tasks.remove(index);
     }
 
+    /**
+     * Gets the list of all tasks.
+     *
+     * @return The list of tasks.
+     */
     public ArrayList<Task> getTasks() {
         return tasks;
     }
 }
 
-// Main dubey.Dubey class
+/**
+ * Main application class for Dubey.
+ */
 public class Dubey {
     private final Storage storage;
     private final TaskList taskList;
     private final Ui ui;
 
+    /**
+     * Constructor for Dubey Class.
+     *
+     * @param filePath Path to the file where tasks are stored.
+     */
     public Dubey(String filePath) {
         this.ui = new Ui();
         this.storage = new Storage(filePath);
         this.taskList = new TaskList(storage.load());
     }
 
+    /**
+     * Runs the Dubey application.
+     */
     void run() {
         ui.showWelcomeMessage();
         Scanner scanner = new Scanner(System.in);
@@ -306,6 +442,11 @@ public class Dubey {
         }
     }
 
+    /**
+     * Processes user commands.
+     *
+     * @param input The user input command.
+     */
     void processCommand(String input) {
         String[] parts = new Parser().parse(input);
         String command = parts[0];
@@ -353,6 +494,11 @@ public class Dubey {
         }
     }
 
+    /**
+     * Main method for Dubey application.
+     *
+     * @param args Command-line arguments.
+     */
     public static void main(String[] args) {
         new Dubey("data/tasks.txt").run();
     }
