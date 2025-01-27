@@ -10,23 +10,45 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+
 class Task {
     protected String description;
     protected boolean isDone;
 
+    /**
+     * Constructor for Task Class
+     *
+     * @param description description of task
+     */
     public Task(String description) {
         this.description = description;
         this.isDone = false;
     }
 
+    /**
+     * gets status of Task dependent on if its marked
+     *
+     * @return "X" if true, " " if false
+     */
     public String getStatusIcon() {
         return (isDone ? "X" : " "); // mark done task with X
     }
 
+    /**
+     * gets status of Task dependent on if its marked
+     *
+     * @param status true or false dependent on if task is done
+     * @return "X" if true, " " if false
+     */
     public void setStatus(boolean status) {
         isDone = status;
     }
 
+    /**
+     * formats Task with string "[X] task description"
+     *
+     * @return "[ ] task description"
+     */
     public String toString() {
         return "[" + this.getStatusIcon() + "] " + description;
     }
@@ -150,37 +172,51 @@ class Storage {
 
     public ArrayList<Task> load() {
         ArrayList<Task> taskList = new ArrayList<>();
-        try (Scanner scanner = new Scanner(new File(filePath))) {
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-                String[] parts = line.split("\\|", -1);
-                String type = parts[0];
-                boolean isDone = parts[1].equals("1");
-                String description = parts[2];
+        File file = new File(filePath);
 
-                switch (type) {
-                    case "T":
-                        Task todo = new Todo(description);
-                        todo.setStatus(isDone);
-                        taskList.add(todo);
-                        break;
-                    case "D":
-                        LocalDate by = LocalDate.parse(parts[3]);
-                        Task deadline = new Deadline(description, by.toString());
-                        deadline.setStatus(isDone);
-                        taskList.add(deadline);
-                        break;
-                    case "E":
-                        String from = parts[3];
-                        String to = parts[4];
-                        Task event = new Event(description, from, to);
-                        event.setStatus(isDone);
-                        taskList.add(event);
-                        break;
+        try {
+            // Create parent directories and the file if they don't exist
+            File parentDir = file.getParentFile();
+            if (parentDir != null && !parentDir.exists()) {
+                parentDir.mkdirs();
+            }
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+
+            // Read existing tasks from the file
+            try (Scanner scanner = new Scanner(file)) {
+                while (scanner.hasNextLine()) {
+                    String line = scanner.nextLine();
+                    String[] parts = line.split("\\|", -1);
+                    String type = parts[0];
+                    boolean isDone = parts[1].equals("1");
+                    String description = parts[2];
+
+                    switch (type) {
+                        case "T":
+                            Task todo = new Todo(description);
+                            todo.setStatus(isDone);
+                            taskList.add(todo);
+                            break;
+                        case "D":
+                            LocalDate by = LocalDate.parse(parts[3]);
+                            Task deadline = new Deadline(description, by.toString());
+                            deadline.setStatus(isDone);
+                            taskList.add(deadline);
+                            break;
+                        case "E":
+                            String from = parts[3];
+                            String to = parts[4];
+                            Task event = new Event(description, from, to);
+                            event.setStatus(isDone);
+                            taskList.add(event);
+                            break;
+                    }
                 }
             }
         } catch (IOException e) {
-            System.out.println("An error occurred while reading from file: " + e.getMessage());
+            System.out.println("An error occurred while handling the file: " + e.getMessage());
         }
         return taskList;
     }
