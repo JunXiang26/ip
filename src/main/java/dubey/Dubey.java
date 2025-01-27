@@ -50,8 +50,9 @@ class Task {
      *
      * @return A string representing the task.
      */
+    @Override
     public String toString() {
-        return "[" + this.getStatusIcon() + "] " + description;
+        return "[" + getStatusIcon() + "] " + description;
     }
 }
 
@@ -104,7 +105,6 @@ class Deadline extends Task {
  * Represents an event task with a start and end time.
  */
 class Event extends Task {
-
     protected String from;
     protected String to;
 
@@ -123,7 +123,7 @@ class Event extends Task {
 
     @Override
     public String toString() {
-        return "[E]" + super.toString() + "(from: " + from + " to: " + to + ")";
+        return "[E]" + super.toString() + " (from: " + from + " to: " + to + ")";
     }
 }
 
@@ -136,19 +136,19 @@ class Ui {
      * Displays a welcome message.
      */
     public void showWelcomeMessage() {
-        System.out.println("     ____________________________________________________________\n" +
-                "     Hello! I'm dubey.Dubey!\n" +
-                "     What can I do for you?\n" +
-                "     ____________________________________________________________\n");
+        System.out.println("     ____________________________________________________________\n"
+                + "     Hello! I'm Dubey!\n"
+                + "     What can I do for you?\n"
+                + "     ____________________________________________________________\n");
     }
 
     /**
      * Displays a goodbye message.
      */
     public void showGoodbyeMessage() {
-        System.out.println("     ____________________________________________________________\n" +
-                "      Bye. Hope to see you again soon!\n" +
-                "     ____________________________________________________________\n");
+        System.out.println("     ____________________________________________________________\n"
+                + "      Bye. Hope to see you again soon!\n"
+                + "     ____________________________________________________________\n");
     }
 
     /**
@@ -157,9 +157,9 @@ class Ui {
      * @param message The error message to display.
      */
     public void showError(String message) {
-        System.out.println("     ____________________________________________________________\n" +
-                "      Error: " + message + "\n" +
-                "     ____________________________________________________________\n");
+        System.out.println("     ____________________________________________________________\n"
+                + "      Error: " + message + "\n"
+                + "     ____________________________________________________________\n");
     }
 
     /**
@@ -168,8 +168,8 @@ class Ui {
      * @param taskList List of tasks to display.
      */
     public void showTaskList(ArrayList<Task> taskList) {
-        System.out.println("     ____________________________________________________________\n" +
-                "      Here are the tasks in your list:");
+        System.out.println("     ____________________________________________________________\n"
+                + "      Here are the tasks in your list:");
         for (int i = 0; i < taskList.size(); i++) {
             System.out.println("      " + (i + 1) + ". " + taskList.get(i));
         }
@@ -183,11 +183,11 @@ class Ui {
      * @param size The total number of tasks in the list.
      */
     public void showTaskAdded(Task task, int size) {
-        System.out.println("     ____________________________________________________________\n" +
-                "      Got it. I've added this task:\n" +
-                "        " + task + "\n" +
-                "      Now you have " + size + " tasks in the list.\n" +
-                "     ____________________________________________________________\n");
+        System.out.println("     ____________________________________________________________\n"
+                + "      Got it. I've added this task:\n"
+                + "        " + task + "\n"
+                + "      Now you have " + size + " tasks in the list.\n"
+                + "     ____________________________________________________________\n");
     }
 
     /**
@@ -197,11 +197,11 @@ class Ui {
      * @param size The total number of tasks remaining in the list.
      */
     public void showTaskDeleted(Task task, int size) {
-        System.out.println("     ____________________________________________________________\n" +
-                "      Noted. I've removed this task:\n" +
-                "        " + task + "\n" +
-                "      Now you have " + size + " tasks in the list.\n" +
-                "     ____________________________________________________________\n");
+        System.out.println("     ____________________________________________________________\n"
+                + "      Noted. I've removed this task:\n"
+                + "        " + task + "\n"
+                + "      Now you have " + size + " tasks in the list.\n"
+                + "     ____________________________________________________________\n");
     }
 
     /**
@@ -210,10 +210,10 @@ class Ui {
      * @param task The task that was marked as done.
      */
     public void showTaskMarked(Task task) {
-        System.out.println("     ____________________________________________________________\n" +
-                "      Nice! I've marked this task as done:\n" +
-                "        " + task + "\n" +
-                "     ____________________________________________________________\n");
+        System.out.println("     ____________________________________________________________\n"
+                + "      Nice! I've marked this task as done:\n"
+                + "        " + task + "\n"
+                + "     ____________________________________________________________\n");
     }
 
     /**
@@ -222,12 +222,11 @@ class Ui {
      * @param task The task that was marked as not done.
      */
     public void showTaskUnmarked(Task task) {
-        System.out.println("     ____________________________________________________________\n" +
-                "      OK, I've marked this task as not done yet:\n" +
-                "        " + task + "\n" +
-                "     ____________________________________________________________\n");
+        System.out.println("     ____________________________________________________________\n"
+                + "      OK, I've marked this task as not done yet:\n"
+                + "        " + task + "\n"
+                + "     ____________________________________________________________\n");
     }
-
 }
 
 /**
@@ -260,6 +259,7 @@ class Storage {
             if (parentDir != null && !parentDir.exists()) {
                 parentDir.mkdirs();
             }
+
             if (!file.exists()) {
                 file.createNewFile();
             }
@@ -274,24 +274,26 @@ class Storage {
                     String description = parts[2];
 
                     switch (type) {
-                        case "T":
-                            Task todo = new Todo(description);
-                            todo.setStatus(isDone);
-                            taskList.add(todo);
-                            break;
-                        case "D":
-                            LocalDate by = LocalDate.parse(parts[3]);
-                            Task deadline = new Deadline(description, by.toString());
-                            deadline.setStatus(isDone);
-                            taskList.add(deadline);
-                            break;
-                        case "E":
-                            String from = parts[3];
-                            String to = parts[4];
-                            Task event = new Event(description, from, to);
-                            event.setStatus(isDone);
-                            taskList.add(event);
-                            break;
+                    case "T":
+                        Task todo = new Todo(description);
+                        todo.setStatus(isDone);
+                        taskList.add(todo);
+                        break;
+                    case "D":
+                        LocalDate by = LocalDate.parse(parts[3]);
+                        Task deadline = new Deadline(description, by.toString());
+                        deadline.setStatus(isDone);
+                        taskList.add(deadline);
+                        break;
+                    case "E":
+                        String from = parts[3];
+                        String to = parts[4];
+                        Task event = new Event(description, from, to);
+                        event.setStatus(isDone);
+                        taskList.add(event);
+                        break;
+                    default:
+                        break;
                     }
                 }
             }
@@ -300,6 +302,7 @@ class Storage {
         }
         return taskList;
     }
+
 
     /**
      * Saves tasks to the file.
@@ -314,7 +317,8 @@ class Storage {
                 } else if (task instanceof Deadline deadline) {
                     writer.write(String.format("D|%d|%s|%s%n", task.isDone ? 1 : 0, task.description, deadline.by));
                 } else if (task instanceof Event event) {
-                    writer.write(String.format("E|%d|%s|%s|%s%n", task.isDone ? 1 : 0, task.description, event.from, event.to));
+                    writer.write(String.format("E|%d|%s|%s|%s%n", task.isDone ? 1 : 0, task.description, event.from,
+                            event.to));
                 }
             }
         } catch (IOException e) {
@@ -422,7 +426,7 @@ public class Dubey {
     /**
      * Runs the Dubey application.
      */
-    void run() {
+    public void run() {
         ui.showWelcomeMessage();
         Scanner scanner = new Scanner(System.in);
 
@@ -447,50 +451,50 @@ public class Dubey {
      *
      * @param input The user input command.
      */
-    void processCommand(String input) {
+    public void processCommand(String input) {
         String[] parts = new Parser().parse(input);
         String command = parts[0];
         switch (command) {
-            case "list":
-                ui.showTaskList(taskList.getTasks());
-                break;
-            case "todo":
-                Task todo = new Todo(parts[1]);
-                taskList.add(todo);
-                ui.showTaskAdded(todo, taskList.getTasks().size());
-                break;
-            case "deadline":
-                String[] deadlineParts = parts[1].split(" /by ");
-                Task deadline = new Deadline(deadlineParts[0], deadlineParts[1]);
-                taskList.add(deadline);
-                ui.showTaskAdded(deadline, taskList.getTasks().size());
-                break;
-            case "event":
-                String[] eventParts = parts[1].split(" /from | /to ");
-                Task event = new Event(eventParts[0], eventParts[1], eventParts[2]);
-                taskList.add(event);
-                ui.showTaskAdded(event, taskList.getTasks().size());
-                break;
-            case "delete":
-                int index = Integer.parseInt(parts[1]) - 1;
-                Task deletedTask = taskList.get(index);
-                taskList.delete(index);
-                ui.showTaskDeleted(deletedTask, taskList.getTasks().size());
-                break;
-            case "mark":
-                int markIndex = Integer.parseInt(parts[1]) - 1;
-                Task markedTask = taskList.get(markIndex);
-                markedTask.setStatus(true);
-                ui.showTaskMarked(markedTask);
-                break;
-            case "unmark":
-                int unmarkIndex = Integer.parseInt(parts[1]) - 1;
-                Task unmarkedTask = taskList.get(unmarkIndex);
-                unmarkedTask.setStatus(false);
-                ui.showTaskUnmarked(unmarkedTask);
-                break;
-            default:
-                throw new IllegalArgumentException("Unknown command: " + command);
+        case "list":
+            ui.showTaskList(taskList.getTasks());
+            break;
+        case "todo":
+            Task todo = new Todo(parts[1]);
+            taskList.add(todo);
+            ui.showTaskAdded(todo, taskList.getTasks().size());
+            break;
+        case "deadline":
+            String[] deadlineParts = parts[1].split(" /by ");
+            Task deadline = new Deadline(deadlineParts[0], deadlineParts[1]);
+            taskList.add(deadline);
+            ui.showTaskAdded(deadline, taskList.getTasks().size());
+            break;
+        case "event":
+            String[] eventParts = parts[1].split(" /from | /to ");
+            Task event = new Event(eventParts[0], eventParts[1], eventParts[2]);
+            taskList.add(event);
+            ui.showTaskAdded(event, taskList.getTasks().size());
+            break;
+        case "delete":
+            int index = Integer.parseInt(parts[1]) - 1;
+            Task deletedTask = taskList.get(index);
+            taskList.delete(index);
+            ui.showTaskDeleted(deletedTask, taskList.getTasks().size());
+            break;
+        case "mark":
+            int markIndex = Integer.parseInt(parts[1]) - 1;
+            Task markedTask = taskList.get(markIndex);
+            markedTask.setStatus(true);
+            ui.showTaskMarked(markedTask);
+            break;
+        case "unmark":
+            int unmarkIndex = Integer.parseInt(parts[1]) - 1;
+            Task unmarkedTask = taskList.get(unmarkIndex);
+            unmarkedTask.setStatus(false);
+            ui.showTaskUnmarked(unmarkedTask);
+            break;
+        default:
+            throw new IllegalArgumentException("Unknown command: " + command);
         }
     }
 
