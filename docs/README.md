@@ -1,4 +1,4 @@
-# dubey.Dubey User Guide
+# dubey.dubey.Dubey User Guide
 
 // Update the title above to match the actual product name
 
