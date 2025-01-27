@@ -250,7 +250,7 @@ public class Dubey {
         this.taskList = new TaskList(storage.load());
     }
 
-    public void run() {
+    void run() {
         ui.showWelcomeMessage();
         Scanner scanner = new Scanner(System.in);
 
@@ -270,7 +270,7 @@ public class Dubey {
         }
     }
 
-    private void processCommand(String input) {
+    void processCommand(String input) {
         String[] parts = new Parser().parse(input);
         String command = parts[0];
         switch (command) {
