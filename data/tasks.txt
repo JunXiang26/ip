@@ -1,0 +1,7 @@
+D|1|return book|2001-08-26
+T|0|read another book
+E|0|some event|Sunday|Modnay
+T|0|something
+D|1|return book|2012-07-29
+D|0|return book|2025-05-18
+E|0|project meeting|Mon 2pm|4pm
