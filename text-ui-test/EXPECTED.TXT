@@ -17,7 +17,7 @@
 
      ____________________________________________________________
       Got it. I've added this task:
-        [E][ ]  project meeting(from: Aug 6th 2pm to: 4pm)
+        [E][ ]  project meeting (from: Aug 6th 2pm to: 4pm)
       Now you have 3 tasks in the list.
      ____________________________________________________________
 
@@ -29,6 +29,6 @@
 
      ____________________________________________________________
       Got it. I've added this task:
-        [E][ ] project meeting(from: Mon 2pm to: 4pm)
+        [E][ ] project meeting (from: Mon 2pm to: 4pm)
       Now you have 5 tasks in the list.
      ____________________________________________________________

@@ -28,7 +28,7 @@ public class DubeyTest {
         assertEquals(3, tasks.size());
         assertEquals("[T][X] Test Todo", tasks.get(0).toString());
         assertEquals("[D][ ] Submit report (by: Jan 30 2025)", tasks.get(1).toString());
-        assertEquals("[E][X] Team meeting(from: 10:00 AM to: 12:00 PM)", tasks.get(2).toString());
+        assertEquals("[E][X] Team meeting (from: 10:00 AM to: 12:00 PM)", tasks.get(2).toString());
 
         // Modify tasks and save
         tasks.get(1).setStatus(true); // Mark the deadline task as done
