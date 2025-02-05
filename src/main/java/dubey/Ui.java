@@ -8,107 +8,95 @@ import java.util.ArrayList;
 class Ui {
 
     /**
-     * Displays a welcome message.
-     */
-    public void showWelcomeMessage() {
-        System.out.println("     ____________________________________________________________\n"
-                + "     Hello! I'm Dubey!\n"
-                + "     What can I do for you?\n"
-                + "     ____________________________________________________________\n");
-    }
-
-    /**
-     * Displays a goodbye message.
-     */
-    public void showGoodbyeMessage() {
-        System.out.println("     ____________________________________________________________\n"
-                + "      Bye. Hope to see you again soon!\n"
-                + "     ____________________________________________________________\n");
-    }
-
-    /**
-     * Displays an error message.
+     * Returns a welcome message.
      *
-     * @param message The error message to display.
+     * @return Welcome message.
      */
-    public void showError(String message) {
-        System.out.println("     ____________________________________________________________\n"
-                + "      Error: " + message + "\n"
-                + "     ____________________________________________________________\n");
+    public String showWelcomeMessage() {
+        return "Hello! I'm Dubey!\nWhat can I do for you?";
     }
 
     /**
-     * Displays the list of tasks.
+     * Returns a goodbye message.
      *
-     * @param taskList List of tasks to display.
+     * @return Goodbye message.
      */
-    public void showTaskList(ArrayList<Task> taskList) {
-        System.out.println("     ____________________________________________________________\n"
-                + "      Here are the tasks in your list:");
+    public String showGoodbyeMessage() {
+        return "Bye. Hope to see you again soon!";
+    }
+
+    /**
+     * Returns an error message.
+     *
+     * @param message The error message.
+     * @return Formatted error message.
+     */
+    public String showError(String message) {
+        return "Error: " + message;
+    }
+
+    /**
+     * Returns the list of tasks.
+     *
+     * @param taskList List of tasks.
+     * @return Formatted list of tasks.
+     */
+    public String showTaskList(ArrayList<Task> taskList) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Here are the tasks in your list:\n");
         for (int i = 0; i < taskList.size(); i++) {
-            System.out.println("      " + (i + 1) + ". " + taskList.get(i));
+            sb.append(i + 1).append(". ").append(taskList.get(i)).append("\n");
         }
-        System.out.println("     ____________________________________________________________\n");
+        return sb.toString();
     }
 
     /**
-     * Displays a message when a task is added.
+     * Returns a message when a task is added.
      *
-     * @param task The task that was added.
-     * @param size The total number of tasks in the list.
+     * @return Formatted task added message.
      */
-    public void showTaskAdded(Task task, int size) {
-        System.out.println("     ____________________________________________________________\n"
-                + "      Got it. I've added this task:\n"
-                + "        " + task + "\n"
-                + "      Now you have " + size + " tasks in the list.\n"
-                + "     ____________________________________________________________\n");
+    public String showTaskAdded(Task task, int size) {
+        return "Got it. I've added this task:\n" + task + "\nNow you have " + size + " tasks in the list.";
     }
 
     /**
-     * Displays a message when a task is deleted.
+     * Returns a message when a task is deleted.
      *
-     * @param task The task that was deleted.
-     * @param size The total number of tasks remaining in the list.
+     * @return Formatted task deleted message.
      */
-    public void showTaskDeleted(Task task, int size) {
-        System.out.println("     ____________________________________________________________\n"
-                + "      Noted. I've removed this task:\n"
-                + "        " + task + "\n"
-                + "      Now you have " + size + " tasks in the list.\n"
-                + "     ____________________________________________________________\n");
+    public String showTaskDeleted(Task task, int size) {
+        return "Noted. I've removed this task:\n" + task + "\nNow you have " + size + " tasks in the list.";
     }
 
     /**
-     * Displays a message when a task is marked as done.
+     * Returns a message when a task is marked as done.
      *
-     * @param task The task that was marked as done.
+     * @return Formatted marked task message.
      */
-    public void showTaskMarked(Task task) {
-        System.out.println("     ____________________________________________________________\n"
-                + "      Nice! I've marked this task as done:\n"
-                + "        " + task + "\n"
-                + "     ____________________________________________________________\n");
+    public String showTaskMarked(Task task) {
+        return "Nice! I've marked this task as done:\n" + task;
     }
 
     /**
-     * Displays a message when a task is marked as not done.
+     * Returns a message when a task is marked as not done.
      *
-     * @param task The task that was marked as not done.
+     * @return Formatted unmarked task message.
      */
-    public void showTaskUnmarked(Task task) {
-        System.out.println("     ____________________________________________________________\n"
-                + "      OK, I've marked this task as not done yet:\n"
-                + "        " + task + "\n"
-                + "     ____________________________________________________________\n");
+    public String showTaskUnmarked(Task task) {
+        return "OK, I've marked this task as not done yet:\n" + task;
     }
 
-    public void showTaskFind(ArrayList<Task> taskList) {
-        System.out.println("     ____________________________________________________________\n" +
-                "      Here are the matching tasks in your list:");
+    /**
+     * Returns a list of tasks found with input keyword.
+     *
+     * @return Formatted list of tasks found.
+     */
+    public String showTaskFind(ArrayList<Task> taskList) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Here are the matching tasks in your list:\n");
         for (int i = 0; i < taskList.size(); i++) {
-            System.out.println("      " + (i + 1) + ". " + taskList.get(i));
+            sb.append(i + 1).append(". ").append(taskList.get(i)).append("\n");
         }
-        System.out.println("     ____________________________________________________________\n");
+        return sb.toString();
     }
 }

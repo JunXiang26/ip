@@ -61,6 +61,12 @@ class TaskList {
         return tasks;
     }
 
+    /**
+     * Finds the list of all tasks with relevant input keyword.
+     *
+     * @param keyword Keyword user is trying to find.
+     * @return The list of tasks.
+     */
     public ArrayList<Task> findAll(String keyword) {
         ArrayList<Task> taskList = new ArrayList<>();
         for (Task task : tasks) {

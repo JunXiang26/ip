@@ -22,90 +22,67 @@ public class Dubey {
     }
 
     /**
-     * Runs the Dubey application.
-     */
-    public void run() {
-        ui.showWelcomeMessage();
-        Scanner scanner = new Scanner(System.in);
-
-        while (true) {
-            String input = scanner.nextLine();
-            if (input.equals("bye")) {
-                ui.showGoodbyeMessage();
-                break;
-            }
-
-            try {
-                processCommand(input);
-                storage.save(taskList.getTasks());
-            } catch (Exception e) {
-                ui.showError(e.getMessage());
-            }
-        }
-    }
-
-    /**
-     * Processes user commands.
+     * Processes user commands and returns respective Dubey bot output.
      *
      * @param input The user input command.
+     * @return respective String output from input command
      */
-    public void processCommand(String input) {
+    public String processCommand(String input) {
         String[] parts = new Parser().parse(input);
         String command = parts[0];
         switch (command) {
         case "list":
-            ui.showTaskList(taskList.getTasks());
-            break;
+            return ui.showTaskList(taskList.getTasks());
         case "todo":
             Task todo = new Todo(parts[1]);
             taskList.add(todo);
-            ui.showTaskAdded(todo, taskList.getTasks().size());
-            break;
+            return ui.showTaskAdded(todo, taskList.getTasks().size());
         case "deadline":
             String[] deadlineParts = parts[1].split(" /by ");
             Task deadline = new Deadline(deadlineParts[0], deadlineParts[1]);
             taskList.add(deadline);
-            ui.showTaskAdded(deadline, taskList.getTasks().size());
-            break;
+            return ui.showTaskAdded(deadline, taskList.getTasks().size());
         case "event":
             String[] eventParts = parts[1].split(" /from | /to ");
             Task event = new Event(eventParts[0], eventParts[1], eventParts[2]);
             taskList.add(event);
-            ui.showTaskAdded(event, taskList.getTasks().size());
-            break;
+            return ui.showTaskAdded(event, taskList.getTasks().size());
         case "delete":
             int index = Integer.parseInt(parts[1]) - 1;
             Task deletedTask = taskList.get(index);
             taskList.delete(index);
-            ui.showTaskDeleted(deletedTask, taskList.getTasks().size());
-            break;
+            return ui.showTaskDeleted(deletedTask, taskList.getTasks().size());
         case "mark":
             int markIndex = Integer.parseInt(parts[1]) - 1;
             Task markedTask = taskList.get(markIndex);
             markedTask.setStatus(true);
-            ui.showTaskMarked(markedTask);
-            break;
+            return ui.showTaskMarked(markedTask);
         case "unmark":
             int unmarkIndex = Integer.parseInt(parts[1]) - 1;
             Task unmarkedTask = taskList.get(unmarkIndex);
             unmarkedTask.setStatus(false);
-            ui.showTaskUnmarked(unmarkedTask);
-            break;
+            return ui.showTaskUnmarked(unmarkedTask);
         case "find":
             String keyword = parts[1];
-            ui.showTaskFind(taskList.findAll(keyword));
-            break;
+            return ui.showTaskFind(taskList.findAll(keyword));
         default:
             throw new IllegalArgumentException("Unknown command: " + command);
         }
     }
 
     /**
-     * Main method for Dubey application.
+     * Saves task to taskList and returns respective formatted String output.
      *
-     * @param args Command-line arguments.
+     * @param input The user input command.
+     * @return formatted respective String output from processCoammand()
      */
-    public static void main(String[] args) {
-        new Dubey("data/tasks.txt").run();
+    public String getResponse(String input) {
+        try {
+            String response = processCommand(input); // Process command
+            storage.save(taskList.getTasks());
+            return "Processed: " + input + "\n" + response; // Modify this to return a meaningful response
+        } catch (Exception e) {
+            return "Error: " + e.getMessage();
+        }
     }
 }

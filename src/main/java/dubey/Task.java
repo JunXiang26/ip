@@ -35,11 +35,6 @@ class Task {
         isDone = status;
     }
 
-    /**
-     * Formats the task as a string.
-     *
-     * @return A string representing the task.
-     */
     @Override
     public String toString() {
         return "[" + getStatusIcon() + "] " + description;
