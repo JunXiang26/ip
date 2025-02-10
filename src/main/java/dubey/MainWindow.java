@@ -1,9 +1,7 @@
 package dubey;
 
 import javafx.animation.PauseTransition;
-
 import javafx.fxml.FXML;
-
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
@@ -11,9 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-
 import javafx.stage.Stage;
-
 import javafx.util.Duration;
 
 /**
@@ -39,13 +35,20 @@ public class MainWindow extends AnchorPane {
     private Image userImage = new Image(this.getClass().getResourceAsStream("/images/person.png"));
     private Image dukeImage = new Image(this.getClass().getResourceAsStream("/images/bot.png"));
 
+    /**
+     * Initializes the JavaFX components when the controller is loaded with a welcome message from Duke to the dialog
+     * container. Binds the scroll pane's vertical scroll value to the height of the dialog container, ensuring
+     * automatic scrolling as new messages are added.
+     *
+     */
     @FXML
     public void initialize() {
         dialogContainer.getChildren().add(DialogBox.getDukeDialog(ui.showWelcomeMessage(), dukeImage));
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
     }
 
-    /** Instantiates dubey
+    /**
+     * Instantiates dubey
      *
      * @param d
      */
@@ -61,7 +64,9 @@ public class MainWindow extends AnchorPane {
     @FXML
     private void handleUserInput() {
         String input = userInput.getText().trim();
-        if (input.isEmpty()) return;
+        if (input.isEmpty()) {
+            return;
+        }
 
         String response = dubey.getResponse(input);
 

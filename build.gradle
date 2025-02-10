@@ -1,7 +1,14 @@
 plugins {
     id 'java'
     id 'application'
+    id 'checkstyle'
     id 'com.github.johnrengelman.shadow' version '7.1.2'
+}
+
+
+checkstyle {
+    toolVersion = '10.2'
+    configFile = file("${rootDir}/config/checkstyle/checkstyle.xml")
 }
 
 repositories {
@@ -26,6 +33,9 @@ dependencies {
     implementation group: 'org.openjfx', name: 'javafx-graphics', version: javaFxVersion, classifier: 'win'
     implementation group: 'org.openjfx', name: 'javafx-graphics', version: javaFxVersion, classifier: 'mac'
     implementation group: 'org.openjfx', name: 'javafx-graphics', version: javaFxVersion, classifier: 'linux'
+
+    checkstyle "com.puppycrawl.tools:checkstyle:10.3"
+
 }
 
 test {

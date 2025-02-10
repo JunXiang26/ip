@@ -1,7 +1,5 @@
 package dubey;
 
-import java.util.Scanner;
-
 /**
  * Main application class for Dubey.
  */
