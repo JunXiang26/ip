@@ -26,6 +26,8 @@ public class Dubey {
      * @return respective String output from input command
      */
     public String processCommand(String input) {
+        assert input != null : "User input should never be null";
+        assert !input.trim().isEmpty() : "User input should not be empty after trimming";
         String[] parts = new Parser().parse(input);
         String command = parts[0];
         switch (command) {
