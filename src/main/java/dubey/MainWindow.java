@@ -69,6 +69,8 @@ public class MainWindow extends AnchorPane {
         }
 
         String response = dubey.getResponse(input);
+        assert response != null : "Chatbot response should never be null";
+        assert !response.trim().isEmpty() : "Chatbot response should not be empty";
 
         if (input.equalsIgnoreCase("bye")) {
             dialogContainer.getChildren().addAll(

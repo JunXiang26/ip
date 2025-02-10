@@ -30,6 +30,8 @@ public class Storage {
     public ArrayList<Task> load() {
         ArrayList<Task> taskList = new ArrayList<>();
         File file = new File(filePath);
+        assert file.exists() : "File should exist before reading";
+        assert file.canRead() : "File should be readable";
 
         try {
             // Create parent directories and the file if they don't exist
