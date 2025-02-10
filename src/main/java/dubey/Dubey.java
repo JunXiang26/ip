@@ -30,6 +30,7 @@ public class Dubey {
         String command = parts[0];
         switch (command) {
         case "list":
+            assert command.equals("list") : "command should be list";
             return ui.showTaskList(taskList.getTasks());
         case "todo":
             Task todo = new Todo(parts[1]);
