@@ -27,6 +27,15 @@ class Task {
     }
 
     /**
+     * gets description of Task
+     *
+     * @return String description
+     */
+    public String getDescription() {
+        return description;
+    }
+
+    /**
      * Sets the completion status of the task.
      *
      * @param status True if the task is done, false otherwise.

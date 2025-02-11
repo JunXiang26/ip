@@ -1,6 +1,7 @@
 package dubey;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Manages the list of tasks.
@@ -67,14 +68,14 @@ class TaskList {
      * @param keyword Keyword user is trying to find.
      * @return The list of tasks.
      */
-    public ArrayList<Task> findAll(String keyword) {
+    public ArrayList<Task> findTasks(String keyword) {
+
         ArrayList<Task> taskList = new ArrayList<>();
         for (Task task : tasks) {
             if (task.description.contains(keyword)) {
                 taskList.add(task);
             }
         }
-
         return taskList;
     }
 }

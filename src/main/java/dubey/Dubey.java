@@ -99,7 +99,7 @@ public class Dubey {
 
     private String processFind(Parser parsedInput) {
         String keyword = parsedInput.getDescription();
-        return ui.showTaskFind(taskList.findAll(keyword));
+        return ui.showTaskFind(taskList.findTasks(keyword));
     }
 
     /**
