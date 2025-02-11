@@ -1,5 +1,0 @@
-T|0|something
-D|1|return book|2012-07-29
-E|1|project meeting|Aug 6th 2pm|4pm
-D|0|return book|2025-05-18
-E|0|project meeting|Mon 2pm|4pm
