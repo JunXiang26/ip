@@ -28,47 +28,78 @@ public class Dubey {
     public String processCommand(String input) {
         assert input != null : "User input should never be null";
         assert !input.trim().isEmpty() : "User input should not be empty after trimming";
-        String[] parts = new Parser().parse(input);
-        String command = parts[0];
+        Parser parsedInput = new Parser(input);
+        String command = parsedInput.getCommand();
         switch (command) {
         case "list":
-            assert command.equals("list") : "command should be list";
-            return ui.showTaskList(taskList.getTasks());
+            return processList();
         case "todo":
-            Task todo = new Todo(parts[1]);
-            taskList.add(todo);
-            return ui.showTaskAdded(todo, taskList.getTasks().size());
+            return processTodo(parsedInput);
         case "deadline":
-            String[] deadlineParts = parts[1].split(" /by ");
-            Task deadline = new Deadline(deadlineParts[0], deadlineParts[1]);
-            taskList.add(deadline);
-            return ui.showTaskAdded(deadline, taskList.getTasks().size());
+            return processDeadline(parsedInput);
         case "event":
-            String[] eventParts = parts[1].split(" /from | /to ");
-            Task event = new Event(eventParts[0], eventParts[1], eventParts[2]);
-            taskList.add(event);
-            return ui.showTaskAdded(event, taskList.getTasks().size());
+            return processEvent(parsedInput);
         case "delete":
-            int index = Integer.parseInt(parts[1]) - 1;
-            Task deletedTask = taskList.get(index);
-            taskList.delete(index);
-            return ui.showTaskDeleted(deletedTask, taskList.getTasks().size());
+            return processDelete(parsedInput);
         case "mark":
-            int markIndex = Integer.parseInt(parts[1]) - 1;
-            Task markedTask = taskList.get(markIndex);
-            markedTask.setStatus(true);
-            return ui.showTaskMarked(markedTask);
+            return processMark(parsedInput);
         case "unmark":
-            int unmarkIndex = Integer.parseInt(parts[1]) - 1;
-            Task unmarkedTask = taskList.get(unmarkIndex);
-            unmarkedTask.setStatus(false);
-            return ui.showTaskUnmarked(unmarkedTask);
+            return processUnmark(parsedInput);
         case "find":
-            String keyword = parts[1];
-            return ui.showTaskFind(taskList.findAll(keyword));
+            return processFind(parsedInput);
         default:
             throw new IllegalArgumentException("Unknown command: " + command);
         }
+    }
+
+    private String processList() {
+        return ui.showTaskList(taskList.getTasks());
+    }
+
+    private String processTodo(Parser parsedInput) {
+        Task todo = new Todo(parsedInput.getDescription());
+        taskList.add(todo);
+        return ui.showTaskAdded(todo, taskList.getTasks().size());
+    }
+
+    private String processDeadline(Parser parsedInput) {
+        System.out.println(parsedInput.getDeadlineDate());
+        Task deadline = new Deadline(parsedInput.getDeadlineDescription(), parsedInput.getDeadlineDate());
+        taskList.add(deadline);
+        return ui.showTaskAdded(deadline, taskList.getTasks().size());
+    }
+
+    private String processEvent(Parser parsedInput) {
+        Task event = new Event(parsedInput.getEventDescription(), parsedInput.getEventFromDate(),
+                parsedInput.getEventToDate());
+        taskList.add(event);
+        return ui.showTaskAdded(event, taskList.getTasks().size());
+    }
+
+    private String processDelete(Parser parsedInput) {
+        int index = parsedInput.getIndexNumber() - 1;
+        Task deletedTask = taskList.get(index);
+        taskList.delete(index);
+        return ui.showTaskDeleted(deletedTask, taskList.getTasks().size());
+    }
+
+    private String processMark(Parser parsedInput) {
+        int markIndex = parsedInput.getIndexNumber() - 1;
+        Task markedTask = taskList.get(markIndex);
+        markedTask.setStatus(true);
+        return ui.showTaskMarked(markedTask);
+    }
+
+    private String processUnmark(Parser parsedInput) {
+        int unmarkIndex = parsedInput.getIndexNumber() - 1;
+        Task unmarkedTask = taskList.get(unmarkIndex);
+        unmarkedTask.setStatus(false);
+        return ui.showTaskUnmarked(unmarkedTask);
+    }
+
+    private String processFind(Parser parsedInput) {
+        String keyword = parsedInput.getDescription();
+        return ui.showTaskFind(taskList.findAll(keyword));
     }
 
     /**

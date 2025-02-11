@@ -73,18 +73,26 @@ public class MainWindow extends AnchorPane {
         assert !response.trim().isEmpty() : "Chatbot response should not be empty";
 
         if (input.equalsIgnoreCase("bye")) {
-            dialogContainer.getChildren().addAll(
-                    DialogBox.getUserDialog(input, userImage),
-                    DialogBox.getDukeDialog(ui.showGoodbyeMessage(), dukeImage)
-            );
-
-            // Delay before closing
-            PauseTransition delay = new PauseTransition(Duration.seconds(2));
-            delay.setOnFinished(e -> closeApplication());
-            delay.play();
+            handleByeInput(input);
             return;
         }
 
+        handleResponse(input, response);
+    }
+
+    private void handleByeInput(String input) {
+        dialogContainer.getChildren().addAll(
+                DialogBox.getUserDialog(input, userImage),
+                DialogBox.getDukeDialog(ui.showGoodbyeMessage(), dukeImage)
+        );
+
+        // Delay before closing
+        PauseTransition delay = new PauseTransition(Duration.seconds(2));
+        delay.setOnFinished(e -> closeApplication());
+        delay.play();
+    }
+
+    private void handleResponse(String input, String response) {
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
                 DialogBox.getDukeDialog(response, dukeImage)
