@@ -1,7 +1,6 @@
 package dubey;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Manages the list of tasks.
