@@ -1,6 +1,6 @@
 # Dubey User Guide
 
-![Screenshot of Dubey Application GUI](https://JunXiang26.github.io/Ip/Ui.png)
+![Screenshot of Dubey Application GUI](https://JunXiang26.github.io/ip/Ui.png)
 
 ### A simple chatbot that does task management
 :warning: *Please note that all input commands are case-sensitive*
